@@ -1,8 +1,13 @@
 <template>
     <div id="stage">
-        <h2>Government API</h2>
-        <D3Chart v-if="apiData" :data="apiData.data" />
-        <h2 v-else>Loading...</h2>
+        <header>
+            <h2>Government API</h2>
+            <button v-on:click="fetchData">Reload</button>
+        </header>
+        <article>
+            <D3Chart v-if="apiData" :data="apiData" />
+            <h2 v-else>Loading...</h2>
+        </article>
     </div>
 </template>
 
@@ -21,10 +26,15 @@ export default {
     },
     methods: {
         fetchData: function () {
+            let headers = "";
             fetch(allAPI)
-                .then((res) => res.json())
+                .then((res) => {
+                    headers = res.headers;
+                    return res.json();
+                })
                 .then((data) => {
                     data.data = data.data.reverse();
+                    data.lastModified = headers.get("Last-Modified");
                     this.apiData = data;
                 });
         },
@@ -39,5 +49,10 @@ export default {
 #stage {
     grid-area: main;
     background-color: olive;
+}
+header {
+    display: grid;
+    grid-template-columns: 1fr auto;
+    padding-left: 50px;
 }
 </style>
