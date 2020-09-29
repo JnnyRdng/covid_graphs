@@ -1,6 +1,6 @@
 <template>
     <div id="stage">
-        <D3Chart :data="cases" />
+        <D3Chart v-if="cases" :data="cases" />
     </div>
 </template>
 

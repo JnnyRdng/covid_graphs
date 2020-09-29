@@ -13,7 +13,7 @@ import SideNav from "@/components/SideNav.vue";
 import GovApi from "@/components/GovApi.vue";
 import BottomFooter from "@/components/BottomFooter.vue";
 
-import { casesAPI } from "@/secrets.js";
+import { casesAPI } from "@/URLs.js";
 export default {
     name: "app",
     components: { TopHeader, SideNav, GovApi, BottomFooter },
@@ -21,6 +21,7 @@ export default {
         return {
             cases: null,
             apiData: null,
+            // casesAPIUrl: process.env.CASES_API_URL,
         };
     },
     methods: {
@@ -42,6 +43,7 @@ export default {
         },
     },
     mounted() {
+        console.log(this.casesAPIUrl);
         this.fetchCases();
     },
 };
