@@ -11,6 +11,8 @@ export function barGraph(data, config) {
 
     const barWidth = graphW / data.length;
 
+    const font = "Popular, sans-serif";
+
     // const tickVals = divideTicks(data, step);
 
     let svg = d3.select(el).append("svg")
@@ -36,6 +38,16 @@ export function barGraph(data, config) {
     y.domain([0, d3.max(data, d => d[config.targetData])])
         .nice();
 
+    // insert the y axis
+    group.append("g")
+        .attr("transform", "translate(0, 0,)")
+        .style("font-family", font)
+        .attr("font-weight", 700)
+        .style("font-size", 10)
+        .call(d3.axisLeft(y)
+            .tickSize(5)
+        );
+
     // y axis gridlines extend across the graph
     group.append("g")
         .attr("transform", "translate(0, 0)")
@@ -52,7 +64,7 @@ export function barGraph(data, config) {
     // insert the x axis
     group.append("g")
         .attr("transform", `translate(0, ${graphH})`)
-        .style("font-family", "Popular, sans-serif")
+        .style("font-family", font)
         .attr("font-weight", 700)
         .style("font-size", 10)
         .call(d3.axisBottom(x)

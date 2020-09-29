@@ -16,7 +16,7 @@ export default {
                 width: 800,
                 height: 500,
                 targetData: "newCasesBySpecimenDate",
-                colour: "ff00ff",
+                colour: "ffff00",
             },
         };
     },
