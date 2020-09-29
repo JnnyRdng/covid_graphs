@@ -17,7 +17,7 @@ export function barGraph(data, config) {
     const el = "#bar-graph";
     const width = config.width;
     const height = config.height;
-    const margin = { top: 30, right: 20, bottom: 50, left: 50 };
+    const margin = { top: 30, right: 20, bottom: 50, left: 80 };
 
     const graphW = width - margin.left - margin.right;
     const graphH = height - margin.top - margin.bottom;
@@ -30,8 +30,9 @@ export function barGraph(data, config) {
     d3.select("svg").remove();
     const svg = d3.select(el).append("svg")
         .attr("class", "graph")
-        .attr("width", width)
-        .attr("height", height);
+        // .attr("width", width)
+        // .attr("height", height);
+        .attr("viewBox", `0 0 ${width} ${height}`);
 
     let group = svg.append("g")
         .attr("transform", `translate(${margin.left}, ${margin.top})`);
