@@ -1,8 +1,8 @@
 <template>
     <div id="main">
         <TopHeader />
-        <SideNav />
-        <GovApi :cases="cases" />
+        <SideNav :loc="loc" />
+        <GovApi v-if="loc === 'gov'" />
         <BottomFooter />
     </div>
 </template>
@@ -13,15 +13,17 @@ import SideNav from "@/components/SideNav.vue";
 import GovApi from "@/components/GovApi.vue";
 import BottomFooter from "@/components/BottomFooter.vue";
 
+import { eventBus } from "@/main.js";
 export default {
     name: "app",
     components: { TopHeader, SideNav, GovApi, BottomFooter },
     data() {
         return {
-            cases: null,
-            apiData: null,
-            // casesAPIUrl: process.env.CASES_API_URL,
+            loc: "gov",
         };
+    },
+    mounted() {
+        eventBus.$on("click-link", (payload) => (this.loc = payload));
     },
 };
 </script>
