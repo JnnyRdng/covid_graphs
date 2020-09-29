@@ -2,6 +2,7 @@
     <div id="stage">
         <h2>Government API</h2>
         <D3Chart v-if="apiData" :data="apiData.data" />
+        <h2 v-else>Loading...</h2>
     </div>
 </template>
 

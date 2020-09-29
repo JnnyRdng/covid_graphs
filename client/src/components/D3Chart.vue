@@ -6,6 +6,8 @@
                 {{ key }}
             </option>
         </select>
+        <label for="avgOnOff">7 day average</label>
+        <input type="checkbox" id="avgOnOff" v-model="config.showAvg" />
     </div>
 </template>
 
@@ -34,13 +36,13 @@ export default {
         keys: function () {
             return Object.keys(this.data[0]);
         },
-        target: function () {
-            return this.config.targetData;
-        },
     },
     watch: {
-        target: function () {
-            barGraph(this.data, this.config);
+        config: {
+            deep: true,
+            handler() {
+                barGraph(this.data, this.config);
+            },
         },
     },
 };
@@ -49,5 +51,9 @@ export default {
 <style scoped>
 #d3Chart {
     background-color: darkcyan;
+}
+.graph {
+    padding: 500px;
+    width: 200px;
 }
 </style>
