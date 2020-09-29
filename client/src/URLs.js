@@ -4,7 +4,8 @@ export const casesAPI = "https://api.coronavirus.data.gov.uk/v1/data?filters=are
 
 export const allAPI = `
 https://api.coronavirus.data.gov.uk/v1/data?
-filters=areaType=overview&structure={
+filters=areaType=overview
+&structure={
 "areaType":"areaType",
 "areaName":"areaName",
 "date":"date",
@@ -13,6 +14,8 @@ filters=areaType=overview&structure={
 "cumCasesBySpecimenDateRate":"cumCasesBySpecimenDateRate",
 "cumDeaths28DaysByPublishDate":"cumDeaths28DaysByPublishDate",
 "newDeaths28DaysByPublishDate":"newDeaths28DaysByPublishDate",
+"newTestsByPublishDate":"newTestsByPublishDate",
+"cumTestsByPublishDate":"cumTestsByPublishDate",
 "hospitalCases":"hospitalCases",
 "newAdmissions":"newAdmissions"
 }
