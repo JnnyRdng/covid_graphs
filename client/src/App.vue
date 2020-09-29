@@ -13,7 +13,6 @@ import SideNav from "@/components/SideNav.vue";
 import GovApi from "@/components/GovApi.vue";
 import BottomFooter from "@/components/BottomFooter.vue";
 
-import { casesAPI } from "@/URLs.js";
 export default {
     name: "app",
     components: { TopHeader, SideNav, GovApi, BottomFooter },
@@ -23,30 +22,6 @@ export default {
             apiData: null,
             // casesAPIUrl: process.env.CASES_API_URL,
         };
-    },
-    methods: {
-        fetchCases: function () {
-            fetch(casesAPI)
-                .then((res) => res.json())
-                .then((data) => {
-                    this.apiData = data;
-                    const sorted = data.data.reverse();
-                    for (let i = 0; i < sorted.length; i++) {
-                        let total = 0;
-                        if (i >= 6) {
-                            for (let j = i - 6; j <= i; j++) {
-                                total += sorted[j].newCasesBySpecimenDate;
-                            }
-                        }
-                        sorted[i].sevenDayAverage = Math.round(total / 7);
-                    }
-                    this.cases = sorted;
-                });
-        },
-    },
-    mounted() {
-        // console.log(this.casesAPIUrl);
-        this.fetchCases();
     },
 };
 </script>

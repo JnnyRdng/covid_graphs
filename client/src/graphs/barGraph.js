@@ -1,7 +1,19 @@
 const d3 = require("./d3.js");
 
 export function barGraph(data, config) {
-    data = data.slice(6, data.length - 1);
+    // data manipulation
+    // append 7 day average
+    for (let i = 0; i < data.length; i++) {
+        let total = 0;
+        if (i >= 6) {
+            for (let j = i - 6; j <= i; j++) {
+                total += data[j][config.targetData];
+            }
+        }
+        data[i].sevenDayAverage = Math.round(total / 7);
+    }
+    // choose range
+    data = data.slice(config.extent.min, config.extent.max);
     const el = "#bar-graph";
     const width = config.width;
     const height = config.height;
@@ -15,8 +27,8 @@ export function barGraph(data, config) {
     const font = "Popular, sans-serif";
 
     // const tickVals = divideTicks(data, step);
-
-    let svg = d3.select(el).append("svg")
+    d3.select("svg").remove();
+    const svg = d3.select(el).append("svg")
         .attr("class", "graph")
         .attr("width", width)
         .attr("height", height);
