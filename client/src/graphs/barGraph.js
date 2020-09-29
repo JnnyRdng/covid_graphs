@@ -1,6 +1,7 @@
 const d3 = require("./d3.js");
 
 export function barGraph(data, config) {
+    data = data.slice(6, data.length - 1);
     const el = "#bar-graph";
     const width = config.width;
     const height = config.height;
@@ -29,7 +30,7 @@ export function barGraph(data, config) {
 
     // x axis setup
     const x = d3.scaleLinear()
-        .range([0, graphW]);
+        .range([0 + barWidth / 2, graphW]);
     x.domain(d3.extent(data, d => parseDate(d.date)));
 
     // y axis setup
@@ -40,7 +41,7 @@ export function barGraph(data, config) {
 
     // insert the y axis
     group.append("g")
-        .attr("transform", "translate(0, 0,)")
+        .attr("transform", "translate(0, 0)")
         .style("font-family", font)
         .attr("font-weight", 700)
         .style("font-size", 10)
@@ -84,11 +85,34 @@ export function barGraph(data, config) {
         .enter()
         .append("rect")
         .attr("fill", `#${config.colour}`)
-        .attr("x", d => x(parseDate(d.date)) - (barWidth / 2))
+        .attr("x", d => x(parseDate(d.date)) - barWidth / 2)
         .attr("y", d => y(d[config.targetData]))
         .attr("height", d => graphH - y(d[config.targetData]))
         .attr("width", barWidth)
 
+    // moving average line
+    if (config.showAvg) {
+        // const averages = data.splice(6);
+        const averages = data;
+        const avgGroup = group.append("g")
+            .attr("class", "moving-avg");
+        drawAvgLine(6, "#ffffff");
+        drawAvgLine(3, "#4444ff");
+        function drawAvgLine(width, colour) {
+            avgGroup.append("path")
+                .datum(averages)
+                .attr("id", "moving-avg-outer")
+                .style("stroke", colour)
+                .style("stroke-width", width)
+                .style("stroke-linecap", "round")
+                .style("stroke-linejoin", "round")
+                .style("fill", "none")
+                .attr("d", d3.line()
+                    .x(d => x(parseDate(d.date)))
+                    .y(d => y(d.sevenDayAverage))
+                );
+        }
+    }
 
 }
 

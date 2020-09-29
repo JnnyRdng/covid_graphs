@@ -31,10 +31,12 @@ export default {
                 .then((data) => {
                     this.apiData = data;
                     const sorted = data.data.reverse();
-                    for (let i = 6; i < sorted.length; i++) {
+                    for (let i = 0; i < sorted.length; i++) {
                         let total = 0;
-                        for (let j = i - 6; j <= i; j++) {
-                            total += sorted[j].newCasesBySpecimenDate;
+                        if (i >= 6) {
+                            for (let j = i - 6; j <= i; j++) {
+                                total += sorted[j].newCasesBySpecimenDate;
+                            }
                         }
                         sorted[i].sevenDayAverage = Math.round(total / 7);
                     }
@@ -43,7 +45,7 @@ export default {
         },
     },
     mounted() {
-        console.log(this.casesAPIUrl);
+        // console.log(this.casesAPIUrl);
         this.fetchCases();
     },
 };

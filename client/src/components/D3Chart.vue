@@ -17,6 +17,7 @@ export default {
                 height: 500,
                 targetData: "newCasesBySpecimenDate",
                 colour: "ffff00",
+                showAvg: true,
             },
         };
     },
